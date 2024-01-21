@@ -5,6 +5,11 @@ import './App.css';
 import axios from "axios";
 import NavbarComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
+import {Route, Routes} from "react-router-dom";
+
+function Home() {
+    return null;
+}
 
 function App() {
 
@@ -35,11 +40,12 @@ function App() {
       <div className="Container">
           <NavbarComponent/>
 
+          <Routes>
+              <Route path="/" element={<Home />}></Route>
+              <Route path="/login" element={<LoginComponent />}></Route>
 
+          </Routes>
 
-          <ul>
-              백엔드 데이터 s: {JSON.stringify(message, null, 2)}
-          </ul>
           <FooterComponent/>
       </div>
   );
