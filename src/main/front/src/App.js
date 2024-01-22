@@ -8,7 +8,8 @@ import FooterComponent from "./FooterComponent";
 import {Route, Routes} from "react-router-dom";
 import LoginComponent from "./LoginComponent";
 import {Container} from "react-bootstrap";
-import FindUserdataComponent from "./FindUserdataComponent";
+import SignUpComponent from "./SignUpComponent";
+import UserDataFindComponent from "./UserDataFindComponent";
 
 function Home() {
     return null;
@@ -46,7 +47,12 @@ function App() {
         <Routes>
             <Route path="/" element={<Home />}/>
             <Route path="/login" element={<LoginComponent />}/>
-            <Route path="/find" element={<FindUserdataComponent />}/>
+            <Route path="/signup" element={<SignUpComponent />}/>
+            <Route path="/find" element={<UserDataFindComponent />}>
+
+            </Route>
+
+
         </Routes>
 
         <FooterComponent/>

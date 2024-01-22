@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Form, Button, Container, Row, Col, Nav, Navbar, NavDropdown} from 'react-bootstrap';
 import {Link} from "react-router-dom";
 
-const FindUserdataComponent = () => {
+const SignUpComponent = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passwordMatch, setPasswordMatch] = useState(true);
@@ -24,8 +24,8 @@ const FindUserdataComponent = () => {
 
 
     return (
-        <Container className="mt-5 d-flex align-items-center justify-content-center">
-            <Form className="w-auto d-flex flex-column">
+        <Container className="mt-5 d-flex align-items-center justify-content-center w-auto">
+            <Form className="w-50 d-flex flex-column">
                 <Form.Group controlId="formBasicName">
                     <Form.Label>Name</Form.Label>
                     <Form.Control type="text" placeholder="Enter your name" />
@@ -44,13 +44,15 @@ const FindUserdataComponent = () => {
 
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" />
+                    <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange}/>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPasswordConfirm">
                     <Form.Label>Confirm Password</Form.Label>
                     <Form.Control type="password" placeholder="Confirm password" onChange={handleConfirmPasswordChange} />
                     {!passwordMatch && <Form.Text className="text-danger">Passwords do not match</Form.Text>}
+                    {passwordMatch && <Form.Text className="text-danger">Passwords match</Form.Text>}
+
                 </Form.Group>
 
                 <Form.Group controlId="formBasicCheckbox">
@@ -66,4 +68,4 @@ const FindUserdataComponent = () => {
 
 };
 
-export default FindUserdataComponent;
+export default SignUpComponent;
