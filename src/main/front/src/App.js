@@ -6,6 +6,9 @@ import axios from "axios";
 import NavbarComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
 import {Route, Routes} from "react-router-dom";
+import LoginComponent from "./LoginComponent";
+import {Container} from "react-bootstrap";
+import FindUserdataComponent from "./FindUserdataComponent";
 
 function Home() {
     return null;
@@ -37,17 +40,19 @@ function App() {
 
     }
   return (
-      <div className="Container">
-          <NavbarComponent/>
+    <div>
+        <NavbarComponent/>
 
-          <Routes>
-              <Route path="/" element={<Home />}></Route>
-              <Route path="/login" element={<LoginComponent />}></Route>
+        <Routes>
+            <Route path="/" element={<Home />}/>
+            <Route path="/login" element={<LoginComponent />}/>
+            <Route path="/find" element={<FindUserdataComponent />}/>
+        </Routes>
 
-          </Routes>
+        <FooterComponent/>
+    </div>
 
-          <FooterComponent/>
-      </div>
+
   );
 }
 
