@@ -7,13 +7,12 @@ import NavbarComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
 import {Route, Routes} from "react-router-dom";
 import LoginComponent from "./LoginComponent";
-import {Container} from "react-bootstrap";
+
 import SignUpComponent from "./SignUpComponent";
 import UserDataFindComponent from "./UserDataFindComponent";
+import Main from "./Main";
 
-function Home() {
-    return null;
-}
+
 
 function App() {
 
@@ -45,7 +44,7 @@ function App() {
         <NavbarComponent/>
 
         <Routes>
-            <Route path="/" element={<Home />}/>
+            <Route path="/" element={<Main />}/>
             <Route path="/login" element={<LoginComponent />}/>
             <Route path="/signup" element={<SignUpComponent />}/>
             <Route path="/find" element={<UserDataFindComponent />}>
