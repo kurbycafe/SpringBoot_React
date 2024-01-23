@@ -11,7 +11,7 @@ import LoginComponent from "./LoginComponent";
 import SignUpComponent from "./SignUpComponent";
 import UserDataFindComponent from "./UserDataFindComponent";
 import Main from "./Main";
-
+import InquiryForm from "./InquiryForm"
 
 
 function App() {
@@ -44,13 +44,14 @@ function App() {
         <NavbarComponent/>
 
         <Routes>
+
             <Route path="/" element={<Main />}/>
             <Route path="/login" element={<LoginComponent />}/>
             <Route path="/signup" element={<SignUpComponent />}/>
-            <Route path="/find" element={<UserDataFindComponent />}>
+            <Route path="/find" element={<UserDataFindComponent />}/>
 
-            </Route>
 
+            <Route path="/inquiry" element={<InquiryForm />}/>
 
         </Routes>
 

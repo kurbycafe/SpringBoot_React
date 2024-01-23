@@ -13,7 +13,7 @@ const FooterComponent = () => {
                         <Nav.Link href="/Impressum" className="text-white">Impressum</Nav.Link>
                         <Nav.Link href="/Datenschutz" className="text-white">Datenschutz</Nav.Link>
                         <Nav.Link href="/AGB" className="text-white">AGB</Nav.Link>
-                        <Nav.Link href="/Kontakt" className="text-white">Kontakt</Nav.Link>
+                        <Nav.Link href="/inquiry" className="text-white">Kontakt</Nav.Link>
                     </Nav>
                 </Row>
 

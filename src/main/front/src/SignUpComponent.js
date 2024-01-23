@@ -43,7 +43,7 @@ const SignUpComponent = () => {
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
+                    aaa
                     <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange}/>
                 </Form.Group>
 
