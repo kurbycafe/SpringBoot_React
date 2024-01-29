@@ -1,8 +1,10 @@
 import {Button, Container, Form, FormGroup} from "react-bootstrap";
 import React from "react";
 
+
 const InquiryForm = () => {
     return (
+
 
             <Form className="m-5" style={{minHeight: '60vh'}}>
                 <FormGroup controlId="name">

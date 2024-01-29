@@ -1,10 +1,13 @@
 import React from 'react';
 import {Form, Button, Container, Row, Col, Nav, Navbar, NavDropdown} from 'react-bootstrap';
 import {Link} from "react-router-dom";
-
+import {motion} from "framer-motion";
+import PageComponent from "../PageComponent";
 const LoginComponent = () => {
     return (
-        <div className="d-flex align-items-center justify-content-center" style={{minHeight: '60vh'}}>
+        <PageComponent>
+        <div
+                    className="d-flex align-items-center justify-content-center" style={{minHeight: '60vh'}}>
 
             <Form className="w-25">
                 <Form.Group controlId="formBasicEmail" className="w-100">
@@ -39,6 +42,7 @@ const LoginComponent = () => {
 
             </Form>
         </div>
+            </PageComponent>
     );
 };
 
