@@ -1,7 +1,93 @@
-import {Container, Form, Image, Table} from "react-bootstrap";
-
+import {Button, Container, Form, Image, Table} from "react-bootstrap";
+import React, {useState} from "react";
+import shortid from "https://cdn.skypack.dev/shortid@2.2.16";
+import  "./FileInput.css";
 
 const CareerApply = () => {
+    const [selectedfile, SetSelectedFile] = useState([]);
+    const [Files, SetFiles] = useState([]);
+
+
+    const filesizes = (bytes, decimals = 2) => {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+
+    const InputChange = (e) => {
+        // --For Multiple File Input
+        let images = [];
+
+        for (let i = 0; i < e.target.files.length; i++) {
+
+            images.push(e.target.files[i]);
+            let reader = new FileReader();
+            let file = e.target.files[i];
+            reader.onloadend = () => {
+                SetSelectedFile((preValue) => {
+                    console.log(...preValue);
+                    return [
+                        ...preValue,
+                        {
+                            id: shortid.generate(),
+                            filename: e.target.files[i].name,
+                            filetype: e.target.files[i].type,
+                            fileimage: reader.result,
+                            datetime: e.target.files[i].lastModifiedDate.toLocaleString('en-IN'),
+                            filesize: filesizes(e.target.files[i].size)
+                        }
+                    ]
+                });
+            }
+            if (e.target.files[i]) {
+                reader.readAsDataURL(file);
+            }
+        }
+    }
+
+
+    const DeleteSelectFile = (id) => {
+        if(window.confirm("Are you sure you want to delete this Image?")){
+            const result = selectedfile.filter((data) => data.id !== id);
+            SetSelectedFile(result);
+        }else{
+            // alert('No');
+        }
+
+    }
+
+    const FileUploadSubmit = async (e) => {
+        e.preventDefault();
+
+        // form reset on submit
+        e.target.reset();
+        if (selectedfile.length > 0) {
+            for (let index = 0; index < selectedfile.length; index++) {
+                SetFiles((preValue)=>{
+                    return[
+                        ...preValue,
+                        selectedfile[index]
+                    ]
+                })
+            }
+            SetSelectedFile([]);
+        } else {
+            alert('Please select file')
+        }
+    }
+
+
+    const DeleteFile = async (id) => {
+        if(window.confirm("Are you sure you want to delete this Image?")){
+            const result = Files.filter((data)=>data.id !== id);
+            SetFiles(result);
+        }else{
+            // alert('No');
+        }
+    }
 
     return (
 
@@ -83,58 +169,63 @@ const CareerApply = () => {
 
 
                 <tr>
-                    <td><Form.Label>Upload Other</Form.Label></td>
-                    <Form.Group
-                        controlId="other"
-                    >
-                        <Form.Control
-                            type="file"
-                            placeholder="Upload Other"
-                        />
-                    </Form.Group>
+
+                    <td colSpan={2} >
+                        <form onSubmit={FileUploadSubmit}>
+                            <div className="file-upload-box">
+                                <input type="file" id="fileupload"
+                                       className="file-upload-input"
+                                       onChange={InputChange} multiple/>
+                                <span>Drag and drop or <span className="file-link">Choose your files</span></span>
+                            </div>
+                            <div className="kb-attach-box mb-2 mt-2 ">
+                                {
+                                    selectedfile.map((data, index) => {
+                                        console.log(data);
+                                        const {
+                                            id,
+                                            filename,
+                                            filetype,
+                                            fileimage,
+                                            datetime,
+                                            filesize
+                                        } = data;
+                                        return (
+                                            <div className="file-atc-box" key={id}>
+                                                {
+                                                    filename.match(/.(jpg|jpeg|png|gif|svg)$/i) ?
+                                                        <div className="file-image"><img
+                                                            src={fileimage} alt=""/></div> :
+                                                        <div className="file-image"><i
+                                                            className="far fa-file-alt"></i>
+                                                        </div>
+                                                }
+                                                <div className="file-detail">
+                                                    <h6>{filename}</h6>
+                                                    <p></p>
+                                                    <p><span>Size : {filesize}</span><span
+                                                        className="ml-2">Modified Time : {datetime}</span>
+                                                    </p>
+                                                    <div className="file-actions">
+                                                        <button type="button"
+                                                                className="file-action-btn"
+                                                                onClick={() => DeleteSelectFile(id)}>Delete
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                        </form>
+                    </td>
                 </tr>
 
 
 
-                {/*<tr>
-                    <td><Form.Label>GitHub Link</Form.Label> <Image src="https://img.icons8.com/ios-filled/50/000000/github.png" style={
-                        {
-                            width: "20px",
-                            height: "20px"
-                        }
-                    } alt={
-                        "github"
-                    }/> </td>
-                    <Form.Group
-                        controlId="github"
-                    >
-                        <Form.Control
-                            type="text"
-                            placeholder="Enter GitHub Link"
-                        />
-                    </Form.Group>
-                </tr>
 
-                <tr>
-                    <td><Form.Label>LinkedIn Link</Form.Label>
-
-                        <Image src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCI+CjxwYXRoIGZpbGw9IiMwMjg4RDEiIGQ9Ik00MiwzN2MwLDIuNzYyLTIuMjM4LDUtNSw1SDExYy0yLjc2MSwwLTUtMi4yMzgtNS01VjExYzAtMi43NjIsMi4yMzktNSw1LTVoMjZjMi43NjIsMCw1LDIuMjM4LDUsNVYzN3oiPjwvcGF0aD48cGF0aCBmaWxsPSIjRkZGIiBkPSJNMTIgMTlIMTdWMzZIMTJ6TTE0LjQ4NSAxN2gtLjAyOEMxMi45NjUgMTcgMTIgMTUuODg4IDEyIDE0LjQ5OSAxMiAxMy4wOCAxMi45OTUgMTIgMTQuNTE0IDEyYzEuNTIxIDAgMi40NTggMS4wOCAyLjQ4NiAyLjQ5OUMxNyAxNS44ODcgMTYuMDM1IDE3IDE0LjQ4NSAxN3pNMzYgMzZoLTV2LTkuMDk5YzAtMi4xOTgtMS4yMjUtMy42OTgtMy4xOTItMy42OTgtMS41MDEgMC0yLjMxMyAxLjAxMi0yLjcwNyAxLjk5QzI0Ljk1NyAyNS41NDMgMjUgMjYuNTExIDI1IDI3djloLTVWMTloNXYyLjYxNkMyNS43MjEgMjAuNSAyNi44NSAxOSAyOS43MzggMTljMy41NzggMCA2LjI2MSAyLjI1IDYuMjYxIDcuMjc0TDM2IDM2IDM2IDM2eiI+PC9wYXRoPgo8L3N2Zz4=" style={
-                            {
-                                width: "20px",
-                                height: "20px"
-                            }
-                        } alt={
-                            "Linkedin"
-                        }/></td>
-                    <Form.Group
-                        controlId="linkedin"
-                    >
-                        <Form.Control
-                            type="text"
-                            placeholder="Enter LinkedIn Link"
-                        />
-                    </Form.Group>
-                </tr>*/}
+                <Button className="mt-5" variant="primary" type="submit"> SUBMIT </Button>
 
 
                 </tbody>

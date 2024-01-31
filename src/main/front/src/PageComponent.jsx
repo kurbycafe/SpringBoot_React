@@ -3,10 +3,10 @@ const PageComponent = ({ children }) => {
   return (
       <motion.div
           className="page"
-          initial={{ x: "100%" }}
-          animate={{ x: 0 }}
-          exit={{ x: "-100%" }}
-          transition={{ duration: 0.5 }}
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          exit={{ opacity: 0, y: 50 }}
         >
         {children}
         </motion.div>

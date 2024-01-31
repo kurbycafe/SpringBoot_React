@@ -12,7 +12,7 @@ const Main = () => {
 
     return (
 <PageComponent>
-    <Container>
+
         <Row>
             <Col>
                 <CardGroup>
@@ -64,7 +64,7 @@ const Main = () => {
         </Row>
 
 
-    </Container>
+
 </PageComponent>
 
 

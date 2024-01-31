@@ -4,11 +4,9 @@ import {Link} from "react-router-dom";
 
 const FooterComponent = () => {
     return (
-        <Navbar fixed="bottom" bg="black" className="h-25">
-            <Container>
+        <Navbar bg="black" className="pt-5">
+            <Container >
                 <Row className="text-white">
-
-
                     <Nav >
                         <Nav.Link href="/Impressum" className="text-white">Impressum</Nav.Link>
                         <Nav.Link href="/Datenschutz" className="text-white">Datenschutz</Nav.Link>
