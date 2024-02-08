@@ -1,32 +1,20 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Card, CardGroup, Carousel, Col, Container, Image, Row} from 'react-bootstrap';
-import {motion} from "framer-motion";
-import PageComponent from "../PageComponent";
+import {Card, CardGroup, Carousel, Col, Container, FloatingLabel, Image, Row} from 'react-bootstrap';
+import {Form} from "react-bootstrap";
+import {FadeInWhenVisible, FramerHoverZoomIn} from "../MotionFrameEffects";
+import DatePicker from "react-datepicker";
 
-function ExampleCarouselImage(props: { text: string }) {
-    return null;
-}
+import "react-datepicker/dist/react-datepicker.css";
+
+
 
 const Main = () => {
-    function FadeInWhenVisible({ children }) {
-        return (
-            <motion.div
-                initial={{opacity: 0, y: 50}}
-                whileInView={{opacity: 1, y: 0}}
-                viewport={{once: false}}
-                transition={{
-                    ease: "easeInOut",
-                    duration: 2,
-                    y: {duration: 1},
-                }}
-            >
-                {children}
-            </motion.div>
-        );
-    }
+
 
     const [index, setIndex] = useState(0);
-
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+    const [people, setPeople] = useState(1);
     const handleSelect = (selectedIndex) => {
         setIndex(selectedIndex);
     };
@@ -38,10 +26,19 @@ const Main = () => {
 
     ];
 const serviceList = [
-   "Rooms", "Restaurants", "Massage", "Swimming Pool", "Gym", "Sauna", "Conference Room", "Parking", "Free Wi-Fi", "24/7 Reception", "Room Service", "Laundry Service", "Airport Shuttle",
-
-
+   "Rooms", "Restaurants", "Massage", "Swimming Pool", "Gym", "Sauna", "Conference Room",
+    "Parking", "Free Wi-Fi", "24/7 Reception", "Room Service", "Laundry Service", "Airport Shuttle",
 ]
+
+    const restaurantList = [
+        "Japanese",
+        "Chinese" ,
+        "Italian",
+        "Buffet"
+    ]
+
+
+
     return (
         <Container>
             <div className="">
@@ -58,23 +55,22 @@ const serviceList = [
                 {
                     imageUrls.map((url, index) => (
 
-                        <Carousel.Item key={index}>
-                            <Image src={url} fluid className=" w-100" style={{height : "650px"}}/>
-                            <Carousel.Caption>
-                                <h1>Your Dream Holiday Place</h1>
-                            </Carousel.Caption>
-                        </Carousel.Item>
+                            <Carousel.Item key={index}>
+                                <Image src={url} fluid className=" w-100" style={{height: "650px"}}/>
+                                <Carousel.Caption>
+                                    <h1>Your Dream Holiday Place</h1>
+                                </Carousel.Caption>
+                            </Carousel.Item>
                         )
-
-
                     )
                 }
 
             </Carousel>
-            <div className="mt-1" style={{background : "#534E4B"}} >
+            <div className="mt-5" style={{background: "#534E4B"}}>
                 <FadeInWhenVisible>
-                    <h1 style={{color:"#D9D9D9"}}>Our Services</h1>
-                    <p style={{color:"#D9D9D9"}}>We offer a wide range of services to make your stay as comfortable as possible</p>
+                    <h1 style={{color: "#D9D9D9"}}>Our Services</h1>
+                    <p style={{color: "#D9D9D9"}}>We offer a wide range of services to make your stay as comfortable as
+                        possible</p>
 
                     {serviceList.reduce((rows, serviceName, index) => {
                         if (index % 2 === 0) rows.push([]);
@@ -83,21 +79,109 @@ const serviceList = [
                     }, []).map((row, rowIndex) => (
                         <Row key={rowIndex}>
                             {row.map((service, colIndex) => (
-                                <Col className="ms-3" key={colIndex} style={{color:"#D9D9D9"}}>{service}</Col>
+                                <Col className="ms-3" key={colIndex} style={{color: "#D9D9D9"}}>{service}</Col>
                             ))}
                         </Row>
                     ))}
 
 
-
                 </FadeInWhenVisible>
             </div>
 
+            <div className="mt-5 " style={{background: "#534E4B"}}>
+
+                <h1 style={{color: "#D9D9D9"}}>Book your room</h1>
+                <p style={{color: "#D9D9D9"}}>Choose the date of your stay</p>
+
+
+                < div className="d-flex">
+                    <div className="m-3">
+                        <h5 style={{color: "#D9D9D9"}}>Check-in</h5>
+                        <DatePicker
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date)}
+                            selectsStart
+                            startDate={startDate}
+                            endDate={endDate}
+                        />
+                    </div>
+
+                    <div className="m-3">
+                        <h5 style={{color: "#D9D9D9"}}>Check-out</h5>
+                        <DatePicker
+                            selected={endDate}
+                            onChange={(date) => setEndDate(date)}
+                            selectsEnd
+                            startDate={startDate}
+                            endDate={endDate}
+                            minDate={startDate}
+                        />
+                    </div>
+
+
+
+                    <div className="m-3">
+                        <h5 style={{color: "#D9D9D9"}}>People</h5>
+                        <div className="d-flex">
+
+
+
+                            <button className="btn btn-outline-light btn-secondary "  onClick={() => setPeople(people - 1)}>-</button>
+                            <p className="m-3" style={{color: "#D9D9D9"}}>{people}</p>
+                            <button className="btn btn-outline-light btn-secondary" onClick={() => setPeople(people + 1)}>+</button>
+                        </div>
+                    </div>
+
+                    <div className="m-3  w-100 d-flex align-content-center justify-content-center text-center">
+                        <button className="btn btn-outline-light btn-secondary h-50 text-center mt-3">Book</button>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <div className="mt-5" style={{background: "#534E4B"}}>
+                <FadeInWhenVisible>
+                    <h1 style={{color: "#D9D9D9"}}>Restaurant</h1>
+                    <p style={{color: "#D9D9D9"}}>Our restaurant offers a wide range of dishes from all over the
+                        world.
+                        Enjoy your meal in a cozy atmosphere</p>
+
+                    <CardGroup>
+
+
+                        {(restaurantList).map((key, index) => (
+                            <Card key={index} style={{background: "#534E4B"}}>
+
+
+                            <Card.Body>
+                                        <FramerHoverZoomIn>
+                                            <button className="m-2 p-3 text-white w-75 bg-transparent" style={{
+                                                border: "2px solid white",
+                                                borderRadius: "10px",
+                                            }}> Reserve
+                                            </button>
+
+                                        </FramerHoverZoomIn>
+                                        <Card.Title style={{color: "#D9D9D9"}}>{key}</Card.Title>
+                                    </Card.Body>
+
+                                </Card>
+                            ))}
+
+
+                        </CardGroup>
+
+
+                    </FadeInWhenVisible>
+                </div>
 
         </Container>
 
 
-    );
+);
 };
 
 export default Main;

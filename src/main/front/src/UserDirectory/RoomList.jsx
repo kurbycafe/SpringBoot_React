@@ -1,22 +1,8 @@
 import {motion} from "framer-motion";
 import {Button, FigureCaption, Image, Tab, Tabs} from "react-bootstrap";
+import {FadeInWhenVisible} from "../MotionFrameEffects";
 
-function FadeInWhenVisible({ children }) {
-    return (
-        <motion.div
-            initial={{opacity: 0, y: 50}}
-            whileInView={{opacity: 1, y: 0}}
-            viewport={{once: false}}
-            transition={{
-                ease: "easeInOut",
-                duration: 2,
-                y: {duration: 1},
-            }}
-        >
-            {children}
-        </motion.div>
-    );
-}
+
 
 const RoomList = () => {
     return (
