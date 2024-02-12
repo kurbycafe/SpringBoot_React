@@ -35,5 +35,20 @@ export function FramerHoverZoomIn({ children }) {
     );
 }
 
+/*
+button hover effect
+ */
+export function FramerHoverButton({ children }) {
+    return (
+        <motion.div
+            whileHover={{ scale: 1.1, backgroundColor: "rgba(0, 0, 0, 0.1)" }}
+            transition={{ duration: 0.5 }}
+
+        >
+            {children}
+        </motion.div>
+    );
+}
+
 
 

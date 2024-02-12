@@ -7,4 +7,3 @@ npm install react-bootstrap bootstrap --save
 npm install react-transition-group --save  
 
 npm install react-datepicker --save  
-
