@@ -7,7 +7,7 @@ const SignUpComponent = () => {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-
+    const [emailValidation, setEmailValidation] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
 
@@ -51,29 +51,59 @@ const SignUpComponent = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if (passwordMatch === false) {
+            alert('Passwords do not match');
+            return;
+        }
+
+        if (name === '' || email === '') {
+            alert('Name and email are required');
+            return;
+        }
+        if(emailValidation === false) {
+            alert('Email not validated');
+            return;
+        }
+
+        if (!document.getElementById('formBasicCheckbox').checked) {
+            alert('Please agree to the terms and conditions');
+            return;
+        }
         const formData = new FormData(document.getElementById('frm'));
         console.log(formData);
         axios.post('http://localhost:8080/signupAction', formData)
             .then(response => {
                 console.log(response);
+                console.log(response.data.SUCCESS === true);
+                if (response.status === 200 && response.data.SUCCESS === true) {
+                    alert('User created');
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
+    /*
+    * email send request to /sendEmail
+    * */
+    const sendEmail = (e) => {
+        e.preventDefault();
+        const formData = new FormData(document.getElementById('frm'));
+        console.log(formData);
+        axios.post('http://localhost:8080/sendEmail', formData)
+            .then(response => {
+
+                if (response.status === 200 && response.data.SUCCESS === true) {
+                    alert('Email sent');
+                    setEmailValidation(true);
+                }
             })
             .catch(error => {
                 console.log(error);
             });
     };
 
-/*useEffect(
-    () => {
-        axios.get('http://localhost:8080/signupAction')
-            .then(response => {
-                console.log(response);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }, []
 
-)*/
 
 
     return (
@@ -81,14 +111,14 @@ const SignUpComponent = () => {
             <Form className="w-50 d-flex flex-column" name="frm" id="frm">
                 <Form.Group controlId="formBasicName">
                     <Form.Label>Name</Form.Label>
-                    <Form.Control type="text" placeholder="Enter your name" name="userName" />
+                    <Form.Control type="text" placeholder="Enter your name" name="userName" onChange={setName}/>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicEmail" >
                     <Form.Label>Email address</Form.Label>
                     <Form.Group controlId="formBasicEmail" className="d-flex">
-                        <Form.Control type="email" placeholder="Enter your email" name="userEmail"/>
-                        <Button variant="primary" type="submit" className="m-1"   >
+                        <Form.Control type="email" placeholder="Enter your email" name="userEmail" onChange={setEmail}/>
+                        <Button variant="primary" type="submit" className="m-1"  onClick={sendEmail} >
                             Send
                         </Button>
                     </Form.Group>
@@ -97,7 +127,7 @@ const SignUpComponent = () => {
 
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" value={password} name="userPass" onChange={handlePasswordChange}/>
+                    <Form.Control type="password" placeholder="Password"  name="userPass" onChange={handlePasswordChange}/>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPasswordConfirm">

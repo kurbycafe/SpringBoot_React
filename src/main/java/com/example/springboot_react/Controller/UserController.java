@@ -23,6 +23,8 @@ public class UserController {
 
     private final UserService userService;
 
+    private final Mail mail;
+
     //mapping for user signup action
     @PostMapping("/signupAction")
     //getting user data from frontend to UserTableEntity
@@ -34,7 +36,7 @@ public class UserController {
         user.setUserPass(passwordEncoder.encode(user.getUserPass()));
         System.err.println("after decoding: " + user.toString());
         //check if user data was successfully saved
-      /*  try {
+        /*  try {
             userService.save(user);
         } catch (DataAccessException e) {
             e.getStackTrace();
@@ -42,7 +44,19 @@ public class UserController {
 
         }*/
         return Map.of("SUCCESS", true);
+    }
 
+    //Email sending for user verification
+    @PostMapping("/sendEmail")
+    public Map<String, Object> sendEmail(UserTableEntity user) {
+
+
+        if(mail.sendMail(user.getUserEmail()).equals("SUCCESS")) {
+            return Map.of("SUCCESS", true);
+        }
+        else {
+            return Map.of("SUCCESS", false);
+        }
 
 
 
