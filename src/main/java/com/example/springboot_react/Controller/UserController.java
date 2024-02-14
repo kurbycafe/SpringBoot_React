@@ -25,6 +25,7 @@ public class UserController {
 
     private final Mail mail;
 
+
     //mapping for user signup action
     @PostMapping("/signupAction")
     //getting user data from frontend to UserTableEntity
@@ -32,17 +33,16 @@ public class UserController {
 
         System.err.println(user.toString());
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
         user.setUserPass(passwordEncoder.encode(user.getUserPass()));
         System.err.println("after decoding: " + user.toString());
         //check if user data was successfully saved
-        /*  try {
+         try {
             userService.save(user);
         } catch (DataAccessException e) {
             e.getStackTrace();
             return Map.of("SUCCESS", false);
 
-        }*/
+        }
         return Map.of("SUCCESS", true);
     }
 
@@ -60,8 +60,31 @@ public class UserController {
 
 
 
-    }
 
+    }
+@PostMapping("loginAction")
+    public Map<String, Object> login(UserTableEntity user) {
+
+        UserTableEntity userResult = userService.findByUserEmail(user.getUserEmail());
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        System.err.println(passwordEncoder.matches("111", "$2a$10$MhbvgPnFLs62bFEIgxxMhuQn1QoSZF8064Vk.y731R648SBU0Dlbi"));
+        System.err.println(passwordEncoder.matches("111", userResult.getUserPass()));
+
+    System.err.println("userInput" + user.toString());
+    System.err.println("userResult" + userResult.toString());
+        //compare the password from the frontend and the password from the database
+            if (passwordEncoder.matches(user.getUserPass(), userResult.getUserPass())) {
+                System.err.println("login success");
+                return Map.of("SUCCESS", true);
+
+            } else {
+                System.err.println("login failed");
+                return Map.of("SUCCESS", false);
+            }
+
+
+    }
 
 
 }

@@ -18,6 +18,12 @@ public class UserRepositoy {
     EntityManager entityManager;
 
     public void save(UserTableEntity user) {
-       // entityManager.persist(user);
+       entityManager.persist(user);
+    }
+
+    public UserTableEntity findByUserEmail(String userEmail) {
+        return entityManager.createQuery("select u from UserTableEntity u where u.userEmail = :userEmail", UserTableEntity.class)
+                .setParameter("userEmail", userEmail)
+                .getSingleResult();
     }
 }

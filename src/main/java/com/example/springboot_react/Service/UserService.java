@@ -15,4 +15,8 @@ public class UserService {
     public void save(UserTableEntity user) {
         userRepositoy.save(user);
     }
+
+    public UserTableEntity findByUserEmail(String userEmail) {
+        return userRepositoy.findByUserEmail(userEmail);
+    }
 }

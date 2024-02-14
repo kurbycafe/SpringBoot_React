@@ -70,11 +70,10 @@ const SignUpComponent = () => {
             return;
         }
         const formData = new FormData(document.getElementById('frm'));
-        console.log(formData);
+
         axios.post('http://localhost:8080/signupAction', formData)
             .then(response => {
-                console.log(response);
-                console.log(response.data.SUCCESS === true);
+
                 if (response.status === 200 && response.data.SUCCESS === true) {
                     alert('User created');
                 }
