@@ -2,6 +2,8 @@ package com.example.springboot_react.Controller;
 
 import com.example.springboot_react.Service.UserService;
 import com.example.springboot_react.VO.UserTableEntity;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -55,7 +57,11 @@ public class UserController {
     @PostMapping("/sendEmail")
     public Map<String, Object> sendEmail(UserTableEntity user) {
 
-
+        UserTableEntity userResult = userService.findByUserEmail(user.getUserEmail());
+        //check if the email is already registered
+        if(user.getUserEmail().equals(userResult.getUserEmail())) {
+            return Map.of("SUCCESS", "Duplicated");
+        }
         if(mail.sendMail(user.getUserEmail()).equals("SUCCESS")) {
             return Map.of("SUCCESS", true);
         }
@@ -68,7 +74,7 @@ public class UserController {
 
     }
 @PostMapping("loginAction")
-    public Map<String, Object> login(UserTableEntity user) {
+    public Map<String, Object> login(HttpServletRequest request,UserTableEntity user) {
 
         UserTableEntity userResult = userService.findByUserId(user.getUserId());
 
@@ -77,6 +83,12 @@ public class UserController {
         //compare the password from the frontend and the password from the database
             if (passwordEncoder.matches(user.getUserPass(), userResult.getUserPass())) {
                 System.err.println("login success");
+                //session and cookie management
+                HttpSession session = request.getSession();
+                session.setAttribute("userInfo", userResult);
+                session.setMaxInactiveInterval(60 * 30);
+                //cookie management
+
                 return Map.of("SUCCESS", true);
 
             } else {

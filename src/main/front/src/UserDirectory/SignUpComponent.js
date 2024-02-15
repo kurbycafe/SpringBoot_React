@@ -96,11 +96,18 @@ const SignUpComponent = () => {
         console.log(formData);
         axios.post('http://localhost:8080/sendEmail', formData)
             .then(response => {
+if (response.status === 200){
+    if ( response.data.SUCCESS === true) {
+        alert('Email sent');
+        setEmailValidation(true);
+    }
+    if ( response.data.SUCCESS === "Duplicated") {
+        alert('Email already exists');
+        setEmailValidation(false);
+    }
+}
 
-                if (response.status === 200 && response.data.SUCCESS === true) {
-                    alert('Email sent');
-                    setEmailValidation(true);
-                }
+
             })
             .catch(error => {
                 console.log(error);

@@ -3,7 +3,7 @@ import React from "react";
 import Career from "./CareerList";
 import {motion} from "framer-motion";
 const redirect = (id) => {
-    window.location.href = "/careerApply?jobId=" + id;
+    window.location.href = "/CareerApply?jobId=" + id;
 
 }
 const CareerView = () => {
