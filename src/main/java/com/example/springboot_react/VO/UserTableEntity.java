@@ -22,7 +22,10 @@ public class UserTableEntity extends CommVO{
     @Id
     @Column(name = "USER_IDX")
     private int userIdx;
-    
+
+    @Column(name = "USER_ID")
+    private String userId;
+
     @Column(name = "USER_NAME")
     private String userName;
     

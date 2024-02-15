@@ -31,6 +31,11 @@ public class UserController {
     //getting user data from frontend to UserTableEntity
     public Map<String, Object> signup(UserTableEntity user) {
 
+
+        UserTableEntity userResult = userService.findByUserId(user.getUserId());
+        if(user.getUserId().equals(userResult.getUserId())) {
+            return Map.of("SUCCESS", "Duplicated");
+        }
         System.err.println(user.toString());
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setUserPass(passwordEncoder.encode(user.getUserPass()));
@@ -65,14 +70,10 @@ public class UserController {
 @PostMapping("loginAction")
     public Map<String, Object> login(UserTableEntity user) {
 
-        UserTableEntity userResult = userService.findByUserEmail(user.getUserEmail());
+        UserTableEntity userResult = userService.findByUserId(user.getUserId());
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        System.err.println(passwordEncoder.matches("111", "$2a$10$MhbvgPnFLs62bFEIgxxMhuQn1QoSZF8064Vk.y731R648SBU0Dlbi"));
-        System.err.println(passwordEncoder.matches("111", userResult.getUserPass()));
 
-    System.err.println("userInput" + user.toString());
-    System.err.println("userResult" + userResult.toString());
         //compare the password from the frontend and the password from the database
             if (passwordEncoder.matches(user.getUserPass(), userResult.getUserPass())) {
                 System.err.println("login success");

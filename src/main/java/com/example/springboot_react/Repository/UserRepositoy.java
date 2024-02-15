@@ -26,4 +26,10 @@ public class UserRepositoy {
                 .setParameter("userEmail", userEmail)
                 .getSingleResult();
     }
+
+    public UserTableEntity findByUserId(String userId) {
+        return entityManager.createQuery("select u from UserTableEntity u where u.userId = :userId", UserTableEntity.class)
+                .setParameter("userId", userId)
+                .getSingleResult();
+    }
 }

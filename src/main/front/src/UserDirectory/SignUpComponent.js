@@ -74,8 +74,13 @@ const SignUpComponent = () => {
         axios.post('http://localhost:8080/signupAction', formData)
             .then(response => {
 
-                if (response.status === 200 && response.data.SUCCESS === true) {
-                    alert('User created');
+                if (response.status === 200) {
+                    if (response.data.SUCCESS === true) {
+                        alert('User already exists');
+                    }
+                    if (response.data.SUCCESS === "Duplicated") {
+                        alert('User already exists');
+                    }
                 }
             })
             .catch(error => {
@@ -113,6 +118,10 @@ const SignUpComponent = () => {
                     <Form.Control type="text" placeholder="Enter your name" name="userName" onChange={setName}/>
                 </Form.Group>
 
+                <Form.Group controlId="formBasicName">
+                    <Form.Label>ID</Form.Label>
+                    <Form.Control type="text" placeholder="Enter your name" name="userId" onChange={setName}/>
+                </Form.Group>
                 <Form.Group controlId="formBasicEmail" >
                     <Form.Label>Email address</Form.Label>
                     <Form.Group controlId="formBasicEmail" className="d-flex">

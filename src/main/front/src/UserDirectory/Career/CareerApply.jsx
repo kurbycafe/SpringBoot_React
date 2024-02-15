@@ -89,6 +89,18 @@ const CareerApply = () => {
         }
     }
 
+    //form submit axios
+    const formSubmit = async (e) => {
+        e.preventDefault();
+        const formdata = new FormData();
+        for (let index = 0; index < Files.length; index++) {
+            formdata.append('file', Files[index]);
+        }
+        console.log(formdata);
+        // const response = await axios.post('http://localhost:5000/upload', formdata);
+        // console.log(response);
+    }
+
     return (
 
 
@@ -99,9 +111,7 @@ const CareerApply = () => {
             <p>Fill in the form below to apply for a job</p>
             <Form
                 className="mt-5"
-                onSubmit={(e) => {
-                    e.preventDefault();
-                }}
+                id="frm"
             >
             <Table    size="sm">
 
@@ -109,28 +119,18 @@ const CareerApply = () => {
                 <tr>
                     <td><Form.Label>First Name</Form.Label></td>
                     <Form.Group
-                        controlId="firstName"
+                        controlId="Name"
                     >
                         <Form.Control
                             type="text"
                             placeholder="Enter First Name"
+                            name="userName"
                         />
                     </Form.Group>
 
 
                 </tr>
-                <tr className="">
-                    <td><Form.Label>Last Name</Form.Label></td>
-                    <Form.Group
-                        controlId="lastName"
 
-                    >
-                        <Form.Control
-                            type="text"
-                            placeholder="Enter Last Name"
-                        />
-                    </Form.Group>
-                </tr>
 
                 <tr>
                     <td><Form.Label>Email</Form.Label></td>
@@ -140,6 +140,7 @@ const CareerApply = () => {
                         <Form.Control
                             type="email"
                             placeholder="Enter Email"
+                            name="userEmail"
                         />
                     </Form.Group>
                 </tr>
@@ -169,7 +170,7 @@ const CareerApply = () => {
 
 
                 <tr>
-
+                    <td><Form.Label>Upload Files</Form.Label></td>
                     <td colSpan={2} >
                         <form onSubmit={FileUploadSubmit}>
                             <div className="file-upload-box">

@@ -10,7 +10,7 @@ const FindUsernameForm = () => (
                 <Form.Label>Email address</Form.Label>
                 <Form.Control type="email" placeholder="Enter your email" />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" className="mt-5">
                 Find Username
             </Button>
         </Form>
@@ -26,7 +26,7 @@ const ResetPasswordForm = () => (
                 <Form.Label>Username</Form.Label>
                 <Form.Control type="text" placeholder="Enter your username" />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" className="mt-5">
                 Reset Password
             </Button>
         </Form>

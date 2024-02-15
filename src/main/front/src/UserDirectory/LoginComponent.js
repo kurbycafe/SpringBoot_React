@@ -36,7 +36,7 @@ const LoginComponent = () => {
             <Form className="w-25" id="frm">
                 <Form.Group controlId="formBasicEmail" className="w-100">
                     <Form.Label>ID</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" name="userEmail"/>
+                    <Form.Control type="email" placeholder="Enter ID" name="userId"/>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword" className="w-100">

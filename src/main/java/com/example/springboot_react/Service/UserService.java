@@ -19,4 +19,8 @@ public class UserService {
     public UserTableEntity findByUserEmail(String userEmail) {
         return userRepositoy.findByUserEmail(userEmail);
     }
+
+    public UserTableEntity findByUserId(String userEmail) {
+        return userRepositoy.findByUserId(userEmail);
+    }
 }
